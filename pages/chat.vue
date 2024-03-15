@@ -203,7 +203,7 @@ async function fetchMessages(page) {
     );
     data = await response.json();
     tableData.value = data;
-    sortTable(0);
+    sortedRows.value = data.data
   } catch (error) {
     console.error("Error fetching data:", error);
   } finally {
