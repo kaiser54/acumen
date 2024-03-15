@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap');
+
+.flex {
+  display: flex;
+}
+
+*,
+.base__font,
+a {
+  font-family: "Hanken Grotesk", sans-serif;
+}
+
+.circle {
+  align-items: center;
+  justify-content: center;
+  width: var(--width, 42px);
+  height: var(--height, 42px);
+  border-radius: 100px;
+  background-color: var(--bg, #f5f7fc);
+  transition: all 0.3s ease-in;
+}
+
+.circle:hover {
+  background-color: #e5e8ee;
+}
+
+.page__wrapper {
+  max-width: 90%;
+  width: 100%;
+  margin-top: 19px;
+  margin-inline: auto;
+  min-height: 100vh;
+}
+
+.btn {
+  border: none;
+}
+
+.hr {
+  height: 1px;
+  background-color: #d3d7ea;
+}
+
+.dashcard__container {
+  gap: 13px;
+  flex-wrap: wrap;
+}
+
+.dash__card__wrap {
+  width: 228px;
+  height: 115px;
+  padding: 22px 24px;
+}
+
+.dash__card .header {
+  margin-bottom: 12px;
+  font-size: 12px;
+  line-height: 24px;
+  color: #566ba0;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.dash__card .details {
+  font-size: 28px;
+  line-height: 32px;
+  color: #566ba0;
+  font-weight: 400;
+}
+
+.input{
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid #C1CEC8;
+}
+
+input,
+select  {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 12px 0 13px 25px;
+}
