@@ -118,7 +118,6 @@
       </div>
     </CardWrapper>
 
-
     <!-- <div class="table_filter_wrap">
       <div class="table__filter">
         <div class="table__header">
@@ -203,7 +202,7 @@ async function fetchMessages(page) {
     );
     data = await response.json();
     tableData.value = data;
-    sortedRows.value = data.data
+    sortedRows.value = data.data;
   } catch (error) {
     console.error("Error fetching data:", error);
   } finally {
@@ -295,9 +294,11 @@ function showPopUp(e) {
 }
 
 function formatDate(dateString) {
-  const date = new Date(dateString);
+  const datePart = dateString.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/g)[0];
+  const date = new Date(datePart);
 
-  const months = [
+  const day = date.getDate();
+  const monthNames = [
     "Jan",
     "Feb",
     "Mar",
@@ -311,9 +312,7 @@ function formatDate(dateString) {
     "Nov",
     "Dec",
   ];
-
-  const day = date.getDate();
-  const month = months[date.getMonth()];
+  const month = monthNames[date.getMonth()];
   const year = date.getFullYear();
 
   const formattedDate = `${day} ${month}, ${year}`;
@@ -551,18 +550,18 @@ table tr td:last-child {
 
 .select__filter {
   width: 100%;
-align-items: center;
-justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .filter__field label {
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
-  color: #51545C;
+  color: #51545c;
 }
 
-.filter__field input.input{
+.filter__field input.input {
   width: 100%;
   max-width: fit-content;
 }
