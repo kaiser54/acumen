@@ -23,6 +23,15 @@
       </CardWrapper>
     </div>
     <div class="hr"></div>
+
+    <div class="chart__container">
+      <CardWrapper class="chart__wrapper">
+        <Chart :data="chartData" lineColor="#EA8D51" fillColor="#ea8d5126" />
+      </CardWrapper>
+      <CardWrapper class="chart__wrapper">
+        <Chart :data="MonthData" lineColor="#15AE73" fillColor="#15ae7326" />
+      </CardWrapper>
+    </div>
   </div>
 </template>
 
@@ -100,6 +109,30 @@ function bytesToGB(bytes) {
   return Math.ceil(bytes / bytesInGB);
 }
 
+const chartData = [
+  { day: "MON", count: 10 },
+  { day: "TUE", count: 20 },
+  { day: "WED", count: 15 },
+  { day: "THU", count: 25 },
+  { day: "FRI", count: 22 },
+  { day: "SAT", count: 30 },
+  { day: "SUN", count: 28 },
+];
+const MonthData = [
+  { month: "JAN", count: 10 },
+  { month: "FEB", count: 26 },
+  { month: "MAR", count: 15 },
+  { month: "APR", count: 25 },
+  { month: "MAY", count: 22 },
+  { month: "JUN", count: 30 },
+  { month: "JUL", count: 8 },
+  { month: "AUG", count: 18 },
+  { month: "SEP", count: 5 },
+  { month: "OCT", count: 27 },
+  { month: "NOV", count: 15 },
+  { month: "DEC", count: 30 },
+];
+
 onMounted(() => {
   fetchData();
 });
@@ -135,6 +168,18 @@ sub {
 
 .hr {
   margin-block: 24px;
+}
+
+.chart__container {
+  display: flex;
+  gap: 23px;
+}
+
+.chart__wrapper {
+  width: fit-content;
+  padding-inline: 34px;
+  padding-bottom: 17px;
+  padding-top: 10px;
 }
 
 @keyframes skeleton__loader {

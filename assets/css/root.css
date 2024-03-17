@@ -6,6 +6,7 @@
 
 *,
 .base__font,
+canvas,
 a {
   font-family: "Hanken Grotesk", sans-serif;
 }
