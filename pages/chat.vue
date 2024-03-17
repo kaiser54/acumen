@@ -67,7 +67,7 @@
             <th></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="!loading">
           <tr v-for="(row, index) in sortedRows" :key="index">
             <td>{{ row.full_name }}</td>
             <td>{{ row.message_sent }}</td>
@@ -90,7 +90,7 @@
           </tr>
         </tbody>
       </table>
-
+      <p v-if="loading" style="text-align: center; margin-top: 34px;"> Please wait, loading... </p>
       <div class="pagination">
         <button
           class="btn prev"

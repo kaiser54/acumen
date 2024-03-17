@@ -53,12 +53,13 @@ onMounted(async () => {
             font: {
               size: 12,
               weight: 400,
-              family: "Hanken Grotesk",
+              family: "'Hanken Grotesk', sans-serif",
             },
           },
         },
         tooltip: {
           enabled: true,
+          displayColors: false,
         },
       },
       scales: {
