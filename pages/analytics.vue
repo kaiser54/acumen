@@ -26,9 +26,31 @@
 
     <div class="chart__container">
       <CardWrapper class="chart__wrapper">
+        <header class="graph__header flex">
+          <div class="graph__title">Daily Active Users</div>
+          <div class="dropdown__group flex">
+            <div class="dropdown__btn flex">
+              30 Days
+              <span v-html="arrow_down"></span>
+            </div>
+            <div class="dropdown__btn flex">
+              All Activites
+              <span v-html="arrow_down"></span>
+            </div>
+          </div>
+        </header>
         <Chart :data="chartData" lineColor="#EA8D51" fillColor="#ea8d5126" />
       </CardWrapper>
       <CardWrapper class="chart__wrapper">
+        <header class="graph__header flex">
+          <div class="graph__title">Monthly Active Users</div>
+          <div class="dropdown__group flex">
+            <div class="dropdown__btn flex">
+              All Activites
+              <span v-html="arrow_down"></span>
+            </div>
+          </div>
+        </header>
         <Chart :data="MonthData" lineColor="#15AE73" fillColor="#15ae7326" />
       </CardWrapper>
     </div>
@@ -37,7 +59,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { fi_refresh } from "~/utils/svg.js";
+import { fi_refresh, arrow_down } from "~/utils/svg.js";
 
 definePageMeta({
   layout: "dashboard",
@@ -182,6 +204,42 @@ sub {
   padding-top: 10px;
 }
 
+.graph__header {
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 46px;
+}
+
+.graph__title {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #566ba0;
+  text-transform: uppercase;
+}
+
+.dropdown__group {
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown__btn {
+  color: #021c3e;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.6%;
+  line-height: 20px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 8px 16px;
+  background: #ededed;
+  border-radius: 4px;
+}
+
 @keyframes skeleton__loader {
   0% {
     opacity: 0.5;
@@ -211,3 +269,5 @@ sub {
   }
 }
 </style>
+import type { color } from "chart.js/helpers"; import type { color } from
+"chart.js/helpers";
