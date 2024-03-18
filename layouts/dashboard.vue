@@ -117,7 +117,7 @@ const navLinks = [
 ];
 </script>
 
-<style scoped>
+<style>
 .layout__wrapper {
   background-color: #f3f7ff;
 }

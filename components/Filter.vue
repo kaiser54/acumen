@@ -5,52 +5,60 @@
         <h3>Filter Table</h3>
         <span v-html="clear" class="clear flex" @click="close()"></span>
       </div>
-      <div class="filter__wrap flex">
-        <div
-          class="filter__capsule flex"
-          :class="{ active: index == activeFilterCapsule }"
-          v-for="(data, index) in filterCapsule"
-          :key="data"
-          @click="handleFilterCapsule(index)"
-        >
-          {{ data }}
-        </div>
-      </div>
-      <div class="select__filter flex">
-        <div class="filter__field">
-          <label for="">Date From</label>
-          <input class="input" type="date" name="" id="" />
-        </div>
-        <div class="filter__field">
-          <label for="">Date To</label>
-          <input class="input" type="date" name="" id="" />
-        </div>
-      </div>
-      <div class="select__filter flex">
-        <div class="filter__field">
-          <label for="">Messages</label>
-          <div class="select input">
-            <select name="" id="" v-model="selectedMessageRange">
-              <option value="" disabled selected>Please select</option>
-              <option value="0-500">0 - 500 Messages</option>
-              <option value="500-2000">500 - 2000 messages</option>
-              <option value="2000+">2000+ Messages</option>
-            </select>
+      <div class="filter__wrap__group__cta">
+        <div class="wrap">
+          <div class="filter__wrap flex">
+            <div
+              class="filter__capsule flex"
+              :class="{ active: index == activeFilterCapsule }"
+              v-for="(data, index) in filterCapsule"
+              :key="data"
+              @click="handleFilterCapsule(index)"
+            >
+              {{ data }}
+            </div>
+          </div>
+          <div class="select__filter flex">
+            <div class="filter__field">
+              <label for="">Date From</label>
+              <input class="input" type="date" name="" id="" />
+            </div>
+            <div class="filter__field">
+              <label for="">Date To</label>
+              <input class="input" type="date" name="" id="" />
+            </div>
+          </div>
+          <div class="select__filter flex">
+            <div class="filter__field">
+              <label for="">Messages</label>
+              <div class="select input">
+                <select name="" id="" v-model="selectedMessageRange">
+                  <option value="" disabled selected>Please select</option>
+                  <option value="0-500">0 - 500 Messages</option>
+                  <option value="500-2000">500 - 2000 messages</option>
+                  <option value="2000+">2000+ Messages</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="select__filter flex">
+            <div class="filter__field">
+              <label for="">Media Storage Used</label>
+              <div class="select input">
+                <select name="" id="">
+                  <option value="" disabled selected>Please select</option>
+                  <option value="">0 - 50 MB</option>
+                  <option value="">50 MB - 200MB</option>
+                  <option value="">200MB - 1GB</option>
+                  <option value="">1GB+</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="select__filter flex">
-        <div class="filter__field">
-          <label for="">Media Storage Used</label>
-          <div class="select input">
-            <select name="" id="">
-              <option value="" disabled selected>Please select</option>
-              <option value="">0 - 50 MB</option>
-              <option value="">50 MB - 200MB</option>
-              <option value="">200MB - 1GB</option>
-              <option value="">1GB+</option>
-            </select>
-          </div>
+        <div class="cta">
+          <button class="base__font btn dwnld">Download Report</button>
+          <button class="base__font btn dwnld none">Download Report</button>
         </div>
       </div>
     </div>
@@ -76,7 +84,7 @@ const selectedMessageRange = ref("");
 const emits = defineEmits(["filterCapsule", "handleCloseFilter"]);
 
 function filterbyMessage(selectedMessageRange) {
-    emits("filterCapsule", selectedMessageRange);
+  emits("filterCapsule", selectedMessageRange);
 }
 
 function handleFilterCapsule(index) {
@@ -94,6 +102,7 @@ function close() {
 }
 
 .table__filter {
+  position: relative;
   width: 100%;
   height: 100vh;
   background: #fff;
@@ -102,6 +111,7 @@ function close() {
   padding: 26px 40px;
 }
 .table__header {
+  margin-bottom: 33px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -124,6 +134,7 @@ function close() {
 }
 
 .filter__wrap {
+  margin-bottom: 35px;
   gap: 12px;
   align-items: center;
 }
@@ -147,7 +158,7 @@ function close() {
 }
 
 .select__filter {
-    margin-bottom: 26px;
+  margin-bottom: 26px;
   width: 100%;
   align-items: center;
   justify-content: space-between;
@@ -180,6 +191,32 @@ select {
 .select.input {
   width: 100%;
   padding: 18px 20px;
+}
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20%;
+}
+
+.cta button {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.cta button.none {
+  background: none;
+  color: #8d9091;
+}
+
+.filter__wrap__group__cta {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
 }
 </style>
 
