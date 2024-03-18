@@ -75,6 +75,10 @@ const selectedMessageRange = ref("");
 
 const emits = defineEmits(["filterCapsule", "handleCloseFilter"]);
 
+function filterbyMessage(selectedMessageRange) {
+    emits("filterCapsule", selectedMessageRange);
+}
+
 function handleFilterCapsule(index) {
   emits("filterCapsule", index);
 }
