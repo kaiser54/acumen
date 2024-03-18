@@ -34,16 +34,19 @@
           <span class="indicator"></span>
         </div>
       </div>
-      <div class="input">
-        <input
-          type="text"
-          name=""
-          id=""
-          placeholder="Search..."
-          v-model="searchTerm"
-          @input="handleSearch()"
-        />
-        <span v-html="search"></span>
+      <div class="input__filter flex">
+        <div class="input">
+          <input
+            type="text"
+            name=""
+            id=""
+            placeholder="Search..."
+            v-model="searchTerm"
+            @input="handleSearch()"
+          />
+          <span v-html="search"></span>
+        </div>
+        <button class="btn filter" v-html="filter" @click="handleCloseFilter()"></button>
       </div>
     </div>
     <div class="hr"></div>
@@ -90,7 +93,9 @@
           </tr>
         </tbody>
       </table>
-      <p v-if="loading" style="text-align: center; margin-top: 34px;"> Please wait, loading... </p>
+      <p v-if="loading" style="text-align: center; margin-top: 34px">
+        Please wait, loading...
+      </p>
       <div class="pagination">
         <button
           class="btn prev"
@@ -118,45 +123,13 @@
       </div>
     </CardWrapper>
 
-    <!-- <div class="table_filter_wrap">
-      <div class="table__filter">
-        <div class="table__header">
-          <h3>Filter Table</h3>
-          <span v-html="clear" class="clear flex"></span>
-        </div>
-        <div class="filter__wrap flex">
-          <div
-            class="filter__capsule flex"
-            :class="{ active: index == activeFilterCapsule }"
-            v-for="(data, index) in filterCapsule"
-            :key="data"
-            @click="handleFilterCapsule(index)"
-          >
-            {{ data }}
-          </div>
-        </div>
-        <div class="select__filter flex">
-          <div class="filter__field">
-            <label for="">Date From</label>
-            <input class="input" type="date" name="" id="" />
-          </div>
-          <div class="filter__field">
-            <label for="">Date To</label>
-            <input class="input" type="date" name="" id="" />
-          </div>
-        </div>
-        <div class="select__filter flex">
-          <div class="filter__field">
-            <label for="">Messages</label>
-            <div class="select input">
-              <select name="" id="">
-              <option value="" disabled selected>Please select</option>
-            </select>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
+    <Filter
+      :filterCapsule
+      :activeFilterCapsule
+      @filterCapsule="handleFilterCapsule($event)"
+      @handleCloseFilter="handleCloseFilter()"
+      v-if="showFilter"
+    />
   </div>
 </template>
 
@@ -170,6 +143,7 @@ import {
   eye,
   clear,
   carat,
+  filter,
 } from "~/utils/svg.js";
 
 definePageMeta({
@@ -331,6 +305,11 @@ function handleFilterCapsule(e) {
   activeFilterCapsule.value = e;
 }
 
+const showFilter = ref(false);
+function handleCloseFilter() {
+  showFilter.value = !showFilter.value;
+}
+
 onMounted(async () => {
   await fetchData();
   await fetchMessages(1);
@@ -384,11 +363,25 @@ onMounted(async () => {
   margin-bottom: 20px;
 }
 
+.input__filter {
+  align-items: center;
+  gap: 12px;
+}
+
 .input {
   width: 264px;
   background: #fff;
   padding-right: 17px;
   margin-bottom: 12px;
+}
+
+.filter {
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  background: #fff;
+  border: 1px solid #e7e9ff;
+  border-radius: 4px;
 }
 
 .disable {
@@ -487,92 +480,14 @@ table tr td:last-child {
   font-weight: bold;
 }
 
-.pagination button.active {
-  color: #0546e0;
-  border-color: #0546e0;
-}
-
 .pagination button:disabled {
   cursor: not-allowed;
   background: #919eab;
 }
-.table__filter {
-  width: 100%s;
-  background: #fff;
-  max-width: 588px;
-  margin-left: auto;
-  padding: 26px 40px;
-}
-.table__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.table__header h3 {
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 400;
-  color: #000000;
-}
-
-.table_filter_wrap {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 9999;
-}
-
-.filter__wrap {
-  gap: 12px;
-  align-items: center;
-}
-
-.filter__capsule {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  cursor: pointer;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 18px 10px 18px;
-  border: 1px solid #eff1f6;
-  border-radius: 100px;
-}
-
-.filter__capsule.active {
-  background: #fff1e9;
-  border-color: #f05a28;
-  color: #f05a28;
-}
-
-.select__filter {
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.filter__field label {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  color: #51545c;
-}
-
-.filter__field input.input {
-  width: 100%;
-  max-width: fit-content;
-}
-
-select {
-  padding: 0;
-}
-
-.select.input {
-  width: 100%;
-  padding: 18px 20px;
+.pagination button.active {
+  color: #0546e0;
+  border-color: #0546e0;
 }
 </style>
 
@@ -582,12 +497,7 @@ button.next svg,
   rotate: 180deg;
 }
 
-.table__header .clear {
-  background: #fcf5f5;
-  justify-content: center;
-  align-items: center;
-  height: 26px;
-  width: 26px;
-  border-radius: 50px;
+.filter svg path {
+  fill: #212b36;
 }
 </style>
