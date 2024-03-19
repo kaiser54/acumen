@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps } from "vue";
+import { ref, onMounted } from "vue";
 import Chart from "chart.js/auto";
 
 const props = defineProps({

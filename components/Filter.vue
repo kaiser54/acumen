@@ -13,7 +13,7 @@
               :class="{ active: index == activeFilterCapsule }"
               v-for="(data, index) in filterCapsule"
               :key="data"
-              @click="handleFilterCapsule(index)"
+              @click="handleFilterCapsule({ data, index })"
             >
               {{ data }}
             </div>
@@ -45,20 +45,20 @@
             <div class="filter__field">
               <label for="">Media Storage Used</label>
               <div class="select input">
-                <select name="" id="">
+                <select name="" id="" v-model="selectedMediaRange">
                   <option value="" disabled selected>Please select</option>
-                  <option value="">0 - 50 MB</option>
-                  <option value="">50 MB - 200MB</option>
-                  <option value="">200MB - 1GB</option>
-                  <option value="">1GB+</option>
+                  <option value="0-51200">0 - 50 MB</option>
+                  <option value="51201-204800">50 MB - 200MB</option>
+                  <option value="204801-1048576">200MB - 1GB</option>
+                  <option value="1048577">1GB+</option>
                 </select>
               </div>
             </div>
           </div>
         </div>
         <div class="cta">
-          <button class="base__font btn dwnld">Download Report</button>
-          <button class="base__font btn dwnld none">Download Report</button>
+          <button class="base__font btn dwnld" @click="filterTable()">Filter Table</button>
+          <button class="base__font btn dwnld none">Clear Filter</button>
         </div>
       </div>
     </div>
@@ -66,9 +66,10 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue"
 import { clear } from "~/utils/svg.js";
 
-const {} = defineProps({
+const { filterCapsule, activeFilterCapsule } = defineProps({
   filterCapsule: {
     type: Array,
     required: true,
@@ -80,20 +81,62 @@ const {} = defineProps({
 });
 
 const selectedMessageRange = ref("");
+const selectedMediaRange = ref("");
 
 const emits = defineEmits(["filterCapsule", "handleCloseFilter"]);
 
-function filterbyMessage(selectedMessageRange) {
-  emits("filterCapsule", selectedMessageRange);
-}
-
-function handleFilterCapsule(index) {
-  emits("filterCapsule", index);
+function handleFilterCapsule(e) {
+  emits("filterCapsule", e.index);
+  getTimePeriod(e.data);
 }
 
 function close() {
   emits("handleCloseFilter");
 }
+
+const minDate = ref("");
+const maxDate = ref("");
+
+function getTimePeriod(period) {
+  const today = new Date();
+  switch (period) {
+    case "Today":
+      minDate.value = today.toISOString().split("T")[0];
+      maxDate.value = today.toISOString().split("T")[0];
+      break;
+    case "Last 7 days":
+      const lastWeek = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() - 7
+      );
+      minDate.value = lastWeek.toISOString().split("T")[0];
+      maxDate.value = today.toISOString().split("T")[0];
+      break;
+    case "This month":
+      const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      minDate.value = firstDayOfMonth.toISOString().split("T")[0];
+      maxDate.value = today.toISOString().split("T")[0];
+      break;
+    case "Last 3 months":
+      const firstDayOfLast3Months = new Date(
+        today.getFullYear(),
+        today.getMonth() - 3,
+        1
+      );
+      minDate.value = firstDayOfLast3Months.toISOString().split("T")[0];
+      maxDate.value = today.toISOString().split("T")[0];
+      break;
+    default:
+      console.error("Invalid time period");
+      minDate.value = "";
+      maxDate.value = "";
+  }
+}
+
+onMounted(() => {
+  handleFilterCapsule({ data: filterCapsule[0], index: 0 });
+});
 </script>
 
 <style scoped>
