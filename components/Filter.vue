@@ -21,11 +21,11 @@
           <div class="select__filter flex">
             <div class="filter__field">
               <label for="">Date From</label>
-              <input class="input" type="date" name="" id="" />
+              <input class="input" type="date" name="" id="" v-model="minDate"/>
             </div>
             <div class="filter__field">
               <label for="">Date To</label>
-              <input class="input" type="date" name="" id="" />
+              <input class="input" type="date" name="" id="" v-model="maxDate"/>
             </div>
           </div>
           <div class="select__filter flex">
@@ -57,7 +57,9 @@
           </div>
         </div>
         <div class="cta">
-          <button class="base__font btn dwnld" @click="filterTable()">Filter Table</button>
+          <button class="base__font btn dwnld" @click="filterTable()">
+            Filter Table
+          </button>
           <button class="base__font btn dwnld none">Clear Filter</button>
         </div>
       </div>
@@ -66,7 +68,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, onMounted } from "vue";
 import { clear } from "~/utils/svg.js";
 
 const { filterCapsule, activeFilterCapsule } = defineProps({
@@ -132,6 +134,16 @@ function getTimePeriod(period) {
       minDate.value = "";
       maxDate.value = "";
   }
+}
+
+function filterTable() {
+  const option = {
+    minDate,
+    maxDate,
+    selectedMessageRange,
+    selectedMediaRange,
+  };
+  console.log(option);
 }
 
 onMounted(() => {
